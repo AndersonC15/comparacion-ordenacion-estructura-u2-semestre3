@@ -1,47 +1,35 @@
 package ed.u2.ordenacion;
 
-/**
- * Selection sort instrumentado.
- */
-public final class SelectionSort {
+import java.util.Comparator;
+import java.util.List;
 
-    public static void sort(int[] arreglo, Contador contador, boolean trazar) {
-        if (arreglo == null || arreglo.length <= 1) return;
+public class SelectionSort<T> implements Ordenador<T> {
 
-        if (trazar) System.out.println("=== SELECTION SORT ===");
+    @Override
+    public void ordenar(List<T> lista, Comparator<T> comp, Contador contador) {
 
-        for (int posicionActual = 0; posicionActual < arreglo.length - 1; posicionActual++) {
-            int indiceMinimo = posicionActual;
-            if (trazar) {
-                System.out.println("---- Iteración posicionActual=" + posicionActual + " ----");
-            }
-            for (int posicionBusqueda = posicionActual + 1; posicionBusqueda < arreglo.length; posicionBusqueda++) {
+        int n = lista.size();
+
+        for (int i = 0; i < n - 1; i++) {
+
+            int posMin = i;
+
+            for (int j = i + 1; j < n; j++) {
+
                 contador.incrementarComparaciones();
-                if (trazar) {
-                    System.out.println("Comparando arreglo[" + posicionBusqueda + "]=" + arreglo[posicionBusqueda] +
-                            " con arreglo[" + indiceMinimo + "]=" + arreglo[indiceMinimo]);
-                }
-                if (arreglo[posicionBusqueda] < arreglo[indiceMinimo]) {
-                    indiceMinimo = posicionBusqueda;
-                    if (trazar) System.out.println("→ Nuevo mínimo en " + posicionBusqueda);
+
+                if (comp.compare(lista.get(j), lista.get(posMin)) < 0) {
+                    posMin = j;
                 }
             }
-            if (indiceMinimo != posicionActual) {
-                int temporal = arreglo[posicionActual];
-                arreglo[posicionActual] = arreglo[indiceMinimo];
-                arreglo[indiceMinimo] = temporal;
+
+            if (posMin != i) {
+                T tmp = lista.get(i);
+                lista.set(i, lista.get(posMin));
+                lista.set(posMin, tmp);
+
                 contador.incrementarIntercambios();
-                if (trazar) {
-                    System.out.println("Intercambio entre posiciones " + posicionActual + " y " + indiceMinimo);
-                    imprimirArreglo(arreglo);
-                }
             }
         }
-    }
-
-    private static void imprimirArreglo(int[] arreglo) {
-        System.out.print("[ ");
-        for (int numero : arreglo) System.out.print(numero + " ");
-        System.out.println("]");
     }
 }
