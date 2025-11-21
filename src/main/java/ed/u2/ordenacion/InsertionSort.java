@@ -5,15 +5,18 @@ package ed.u2.ordenacion;
  */
 public final class InsertionSort {
 
+    // Parametros para el benchmarking, en donde el arreglo ordena los datos, el contador que mide las operaciones y el trazar para la vizualizacion.
     public static void sort(int[] arreglo, Contador contador, boolean trazar) {
         if (arreglo == null || arreglo.length <= 1) return;
 
         if (trazar) System.out.println("=== INSERTION SORT ===");
 
+        // Toma el valor actual para ponerlo en la posicion correcta y prepara el indice para comparaciones.
         for (int indiceActual = 1; indiceActual < arreglo.length; indiceActual++) {
             int valorAInsertar = arreglo[indiceActual];
             int indiceComparacion = indiceActual - 1;
 
+            //Muestra que valor se esta insertando e indica que valor se esta ejecutando.
             if (trazar) {
                 System.out.println("---- Iteración indiceActual =" + indiceActual + " ----");
                 System.out.println("Valor a insertar: " + valorAInsertar);
