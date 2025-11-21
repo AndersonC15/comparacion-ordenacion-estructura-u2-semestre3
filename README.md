@@ -26,7 +26,6 @@ Los datasets se guardan en:
 
 src/main/resources/datasets/
 
-
 ### Archivos Generados
 
 | Archivo | Registros | Tipo |
@@ -48,6 +47,7 @@ src/main/resources/datasets/
 
 # Arquitectura del Proyecto
 
+```java
 src/
 └── main/
 ├── java/
@@ -68,7 +68,7 @@ src/
 │ └── App.java
 └── resources/
 └── datasets/
-
+```
 
 ### Justificación de arquitectura (SOLID)
 
@@ -93,29 +93,39 @@ src/
 ```bash
 mvn clean package
 
-### Al ejecutar
+Ejecutar
+java -jar target/taller6.jar
 
-- Se generan los 4 datasets.
-- Se ejecuta el benchmark.
-- Los resultados aparecen en consola.
+Al ejecutar
 
----
-# Metodología del Benchmark
+Se generan los 4 datasets
 
-Cada algoritmo se ejecuta sobre copias de los datasets.
-Se realizan R repeticiones.
-Se descartan las primeras 3.
-Se obtiene la mediana.
+Se ejecuta el benchmark completo
+
+Los resultados aparecen en la consola
+
+Metodología del Benchmark
+
+Cada algoritmo se ejecuta sobre copias independientes de cada dataset
+
+Se realizan R repeticiones
+
+Se descartan las primeras 3 ejecuciones (warm-up)
+
+Se calcula la mediana del resto
+
 Se reporta por consola:
-- Tiempo en milisegundos
-- Comparaciones
-- Intercambios
 
----
+Tiempo en milisegundos
 
-# Conclusiones Generales
+Cantidad de comparaciones
 
-- Inserción es el más eficiente en listas casi ordenadas
-- Selección mantiene un rendimiento estable sin importar el dataset
-- Burbuja es el peor en listas desordenadas e inversas
-- Los datasets influyen mucho en el comportamiento de los algoritmos
+Cantidad de intercambios
+
+Conclusiones Generales
+
+Inserción es el más eficiente en listas casi ordenadas
+
+Selección mantiene un rendimiento estable sin importar el dataset
+
+Burbuja es el peor en listas desordenadas e inversas
