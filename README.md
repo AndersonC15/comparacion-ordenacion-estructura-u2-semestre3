@@ -93,39 +93,23 @@ src/
 ```bash
 mvn clean package
 
-Ejecutar
-java -jar target/taller6.jar
+### Al ejecutar - Se generan los 4 datasets. - Se ejecuta el benchmark. - Los resultados aparecen en consola.
 
-Al ejecutar
+---
 
-Se generan los 4 datasets
-
-Se ejecuta el benchmark completo
-
-Los resultados aparecen en la consola
-
-Metodología del Benchmark
-
-Cada algoritmo se ejecuta sobre copias independientes de cada dataset
-
-Se realizan R repeticiones
-
-Se descartan las primeras 3 ejecuciones (warm-up)
-
-Se calcula la mediana del resto
-
+## Metodología del Benchmark
+Cada algoritmo se ejecuta sobre copias de los datasets.
+Se realizan R repeticiones.
+Se descartan las primeras 3.
+Se obtiene la mediana.
 Se reporta por consola:
+- Tiempo en milisegundos
+- Comparaciones - Intercambios
+ ---
+# Conclusiones Generales
+- Inserción es el más eficiente en listas casi ordenadas.
+- Selección mantiene un rendimiento estable sin importar el dataset.
+- Burbuja es el peor en listas desordenadas e inversas.
+- Los datasets influyen mucho en el comportamiento de los algoritmos.
 
-Tiempo en milisegundos
-
-Cantidad de comparaciones
-
-Cantidad de intercambios
-
-Conclusiones Generales
-
-Inserción es el más eficiente en listas casi ordenadas
-
-Selección mantiene un rendimiento estable sin importar el dataset
-
-Burbuja es el peor en listas desordenadas e inversas
+---
