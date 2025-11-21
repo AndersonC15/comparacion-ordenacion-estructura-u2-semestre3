@@ -93,7 +93,11 @@ src/
 ```bash
 mvn clean package
 
-### Al ejecutar - Se generan los 4 datasets. - Se ejecuta el benchmark. - Los resultados aparecen en consola.
+### Al ejecutar
+
+- Se generan los 4 datasets.
+- Se ejecuta el benchmark.
+- Los resultados aparecen en consola.
 
 ---
 
