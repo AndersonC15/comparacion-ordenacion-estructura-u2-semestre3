@@ -16,16 +16,18 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * Benchmark simple:
- * - carga cada CSV
- * - convierte a int[] (clave) según tipo de dataset
- * - ejecuta Burbuja, Selección, Inserción REPETICIONES veces
- * - descarta primeras DESCARTAR corridas y calcula mediana de tiempos, comparaciones e intercambios
+ * Benchmark:
+ * - carga cada CSV.
+ * - convierte a int[] (clave) según tipo de dataset.
+ * - ejecuta Burbuja, Selección y Inserción.
+ * - descarta corridas y calcula mediana de tiempos, comparaciones e intercambios.
  */
 public class Benchmark {
 
+    // Se encarga de ejecutar y medir el rendimiento de los algoritmos.
     private final DateTimeFormatter FORMATO = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
 
+    // Carga cada dataset desde CSV y convierte los objetos a arrays de enteros.
     public void ejecutarTodos() throws Exception {
         // Citas 100
         System.out.println("\n=== Dataset: citas_100.csv ===");
@@ -53,6 +55,7 @@ public class Benchmark {
     }
 
     // ------------------ lectura CSV simples ------------------
+    // Lee archivos CSV y crea objetos del modelo correspondiente.
     private List<Cita> leerCitas(String ruta) throws IOException {
         List<Cita> lista = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new InputStreamReader(
@@ -98,7 +101,8 @@ public class Benchmark {
         return lista;
     }
 
-    // ------------------ conversiones a claves int[] ------------------
+    // conversiones a claves int[]
+    // Para apellidos usar el ranking lexicografico.
     // Para fechas: usar minutos desde una fecha base (preserva orden)
     private int[] clavesParaCitas(List<Cita> citas) {
         LocalDateTime base = LocalDateTime.of(2025,1,1,0,0);
@@ -130,7 +134,8 @@ public class Benchmark {
         return claves;
     }
 
-    // ------------------ ejecución de algoritmos y estadísticas ------------------
+    // Ejecución de algoritmos y estadísticas.
+    // Permite pasar algoritmos como parametros y se utiliza un contador objeto para llevar las metricas.
     private void ejecutarAlgoritmosYMostrar(String nombreDataset, int[] clavesOriginal) {
         ejecutarYMostrar(nombreDataset, "Burbuja", clavesOriginal, (arr, contador) -> BubbleSort.sort(arr, contador, false));
         ejecutarYMostrar(nombreDataset, "Seleccion", clavesOriginal, (arr, contador) -> SelectionSort.sort(arr, contador, false));
@@ -142,6 +147,7 @@ public class Benchmark {
         void ordenar(int[] arr, Contador contador);
     }
 
+    // Copia el array original para no alterar datos, mide el tiempo y captura metricas del contador.
     private void ejecutarYMostrar(String nombreDataset, String nombreAlg, int[] clavesOriginal, OrdenadorInt ordenador) {
         int R = Config.REPETICIONES;
         int desc = Config.DESCARTAR;
@@ -163,7 +169,7 @@ public class Benchmark {
                     r+1, nombreAlg, tiempos[r], comparaciones[r], intercambios[r]));
         }
 
-        // ordenar arrays para calcular mediana (descartamos primeras 'desc' corridas)
+        // ordenar arrays para calcular mediana, usa mediana y ordena los arrays.
         long[] tiemposFiltrados = filtrarYOrdenar(tiempos, desc);
         long[] compFiltradas = filtrarYOrdenar(comparaciones, desc);
         long[] intercFiltradas = filtrarYOrdenar(intercambios, desc);
@@ -176,7 +182,7 @@ public class Benchmark {
                 nombreAlg, nombreDataset, medianaT, medianaC, medianaI));
     }
 
-    // elimina primeras 'desc' y ordena lo restante (necesario para tomar mediana)
+    // elimina primeras 'desc' y ordena lo restante para la mediana.
     private long[] filtrarYOrdenar(long[] arr, int desc) {
         if (arr.length <= desc) return new long[0];
         long[] res = Arrays.copyOfRange(arr, desc, arr.length);
